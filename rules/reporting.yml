@@ -1,0 +1,11 @@
+id: reporting
+title: Before you report any number
+order: 1
+numbered: true
+items:
+  - State the period, including whether it is one cycle, several cycles combined, or to date.
+  - "State the filter: market definition, cycle and stage."
+  - Give the count and the group size behind every rate (for example 28 of 97).
+  - When a number could differ from a HubSpot view, name the filter that explains the gap.
+  - Separate what the data shows from a hypothesis. Label hypotheses.
+  - Don't describe a pattern as reliable unless it holds in both complete cycles. Flag small samples.

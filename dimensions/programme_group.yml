@@ -1,0 +1,13 @@
+name: programme_group
+label: Programme group
+status: agreed
+properties: []
+rule: Groupings of programmes used for comparison.
+values:
+  - value: PIR
+    definition: The EMFSS PIR benchmark
+  - value: Quant
+    definition: Economics, DSBA, Economics & Management, and Business & Management
+  - value: OB
+    definition: Open Bachelor's
+order: 7

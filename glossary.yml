@@ -1,0 +1,9 @@
+terms:
+  - term: Rejected
+    definition: The Admissions Status value "Unqualified" is labelled Rejected. Call it Rejected.
+  - term: Offer accepted vs enrolled
+    definition: Offer accepted (Enrolling) is not enrolled. Use the Enrolled date for enrolment.
+  - term: Cycle
+    definition: An admissions cycle, September to August, written like 25/26.
+  - term: Market
+    definition: A student's High School Country.

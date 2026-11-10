@@ -1,0 +1,11 @@
+name: first_visit_source
+label: First visit
+status: agreed
+properties: [hs_analytics_source, hs_analytics_source_data_1, hs_analytics_source_data_2]
+rule: >-
+  HubSpot Original Traffic Source. Campaign is in hs_analytics_source_data_1, keyword in
+  hs_analytics_source_data_2.
+notes:
+  - First-visit labels changed between cycles; much of 24/25 sits under Other Campaigns,
+    so paid social comparisons are rough.
+order: 4

@@ -1,0 +1,15 @@
+name: google_search_type
+label: Google brand vs non-brand
+status: confirm
+properties: [hs_analytics_source, hs_analytics_source_data_1]
+rule: >-
+  Brand search is any Google campaign with BRD in its name. Everything else is non-brand,
+  including PMax and Demand Gen. PMax can also serve brand searches.
+values:
+  - value: brand
+    definition: hs_analytics_source = PAID_SEARCH and hs_analytics_source_data_1 contains "brd"
+  - value: non_brand
+    definition: hs_analytics_source = PAID_SEARCH and hs_analytics_source_data_1 does not contain "brd"
+notes:
+  - First visit only, so later ad clicks aren't counted.
+order: 5

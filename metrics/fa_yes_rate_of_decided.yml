@@ -1,0 +1,17 @@
+name: fa_yes_rate_of_decided
+label: Aid yes rate (of decisions made)
+status: agreed
+type: ratio
+description: Of the students we made an aid decision on, how many we said yes to.
+numerator: {expression: "admits in fa_status_group = offered"}
+denominator: {expression: "admits in fa_status_group = offered or refused"}
+formula: offered ÷ (offered + refused)
+unit: percent
+slice_by: [market, cycle]
+benchmark: all_countries
+owner:
+  definition: unassigned
+  calculation: Devlin
+notes:
+  - Always report alongside fa_offer_rate_of_askers.
+order: 6

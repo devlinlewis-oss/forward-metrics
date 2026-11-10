@@ -1,0 +1,16 @@
+name: net_revenue
+label: Net revenue (tuition minus aid)
+status: agreed
+type: unavailable
+description: Tuition minus financial aid.
+formula: tuition − aid
+unit: eur
+owner:
+  definition: Finance
+  calculation: Finance
+notes:
+  - Can't be calculated from HubSpot yet, because aid amounts are missing for most of
+    24/25. It needs Finance's figures. Don't estimate it.
+  - "[confirm] tuition_fees_personal_area is free text in mixed formats, and fee levels
+    haven't been mapped to degree format."
+order: 8

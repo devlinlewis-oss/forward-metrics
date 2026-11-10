@@ -1,0 +1,11 @@
+name: programme_choice
+label: Programme chosen by applicant
+status: agreed
+properties: [bachelors_selection, bachelors_plus_selection, double_bachelors_selection, open_bachelors_selection]
+rule: >-
+  Used from Submitted Application through Invited to Interview. An applicant can choose
+  several, so counts of choices are not counts of people.
+notes:
+  - Adm Process - Step - Forward programmes shows the programme page was submitted, even
+    if the application wasn't.
+order: 6

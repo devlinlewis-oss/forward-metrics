@@ -1,0 +1,8 @@
+id: comparisons
+title: Comparing cycles
+order: 2
+items:
+  - >-
+    Same-date comparison: count each cycle up to the same calendar date using the stage
+    date. For the current cycle, compare to the same date in earlier cycles.
+  - Remember a contact only appears in a cycle if it is tagged to that cycle now.

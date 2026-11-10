@@ -1,0 +1,12 @@
+sources:
+  - id: hubspot
+    label: HubSpot CRM (contacts)
+    owns: [Funnel stages and dates, market, cycle, channel, first visit, programmes, offers, financial aid status]
+  - id: spend_sheet
+    label: Paid media and school visits spend sheet
+    owns: [Paid spend by Google, Meta and school visits, by country targeted]
+    notes:
+      - Meta figures come from Meta Ads Manager, not the old sheet's numbers.
+  - id: finance
+    label: Finance
+    owns: [Tuition and aid amounts, net revenue]

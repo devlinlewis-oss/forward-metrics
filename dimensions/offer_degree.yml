@@ -1,0 +1,6 @@
+name: offer_degree
+label: Degree offered
+status: agreed
+properties: [admission_offer_degree_new]
+rule: Filled from 25/26. A student can hold several offers.
+order: 8

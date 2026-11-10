@@ -1,0 +1,20 @@
+name: stage_count
+label: Contacts reaching a funnel stage
+status: agreed
+type: count
+description: Number of contacts who reached a given funnel stage in the period.
+parameter: stage           # any stage id in stages/funnel.yml
+formula: Count of contacts where the stage's entry_date_property is not null
+filters:
+  - Filter on admissions_cycle_year for the cycle(s) reported
+time_anchor: The stage's entry_date_property
+unit: contacts
+slice_by: [market, cycle, channel_self_reported, first_visit_source, google_search_type, programme_choice]
+owner:
+  definition: unassigned
+  calculation: Devlin
+notes:
+  - Offer accepted is not enrolled. Some students accept and never enrol, so use the
+    Enrolled stage date for enrolment, not Enrolling.
+  - Programme choice counts are choices, not people (an applicant can choose several).
+order: 1

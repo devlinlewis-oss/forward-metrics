@@ -1,0 +1,17 @@
+name: fa_offer_rate_of_askers
+label: Aid offer rate (of everyone who asked)
+status: agreed
+type: ratio
+description: Of admits who asked for financial aid, how many ended up with an offer.
+numerator: {expression: "admits in fa_status_group = offered"}
+denominator: {expression: "admits not in fa_status_group = did_not_ask"}
+formula: offered ÷ asked
+unit: percent
+slice_by: [market, cycle]
+benchmark: all_countries
+owner:
+  definition: unassigned
+  calculation: Devlin
+notes:
+  - Always report alongside fa_yes_rate_of_decided; they answer different questions.
+order: 5

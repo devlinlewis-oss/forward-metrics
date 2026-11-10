@@ -1,0 +1,11 @@
+name: spend_country
+label: Country targeted (spend)
+status: agreed
+properties: []
+source: spend_sheet
+rule: >-
+  Spend is recorded by country targeted. Students are by High School Country, so the two
+  can differ a little.
+notes:
+  - HubSpot says Turkey, while the spend sheet uses both Turkey and Turkiye.
+order: 11

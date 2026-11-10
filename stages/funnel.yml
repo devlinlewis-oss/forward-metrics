@@ -1,0 +1,52 @@
+rule: >-
+  A contact reached a stage if its stage entry date is not null. Use the lifecycle date,
+  not deal properties. In particular, Invited is defined by the lifecycle stage date.
+object: contacts
+stages:
+  - id: started_application
+    label: Started Application
+    lifecycle_value: "735800774"
+    entry_date_property: hs_v2_date_entered_735800774
+    status: agreed
+
+  - id: started_qualified
+    label: Started Qualified
+    lifecycle_value: marketingqualifiedlead
+    entry_date_property: hs_v2_date_entered_marketingqualifiedlead
+    status: agreed
+
+  - id: submitted_application
+    label: Submitted Application
+    lifecycle_value: salesqualifiedlead
+    entry_date_property: hs_v2_date_entered_salesqualifiedlead
+    status: agreed
+
+  - id: eligible_submitted_application
+    label: Eligible Submitted Application
+    lifecycle_value: "845219062"
+    entry_date_property: hs_v2_date_entered_845219062
+    status: confirm
+
+  - id: invited_to_interview
+    label: Invited to Interview
+    lifecycle_value: opportunity
+    entry_date_property: hs_v2_date_entered_opportunity
+    status: agreed
+
+  - id: admitted
+    label: Admitted
+    lifecycle_value: "845292228"
+    entry_date_property: hs_v2_date_entered_845292228
+    status: agreed
+
+  - id: enrolling
+    label: Enrolling (accepted the offer)
+    lifecycle_value: "735815160"
+    entry_date_property: hs_v2_date_entered_735815160
+    status: agreed
+
+  - id: enrolled
+    label: Enrolled
+    lifecycle_value: "735815354"
+    entry_date_property: hs_v2_date_entered_735815354
+    status: agreed

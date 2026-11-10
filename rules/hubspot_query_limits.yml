@@ -1,0 +1,9 @@
+id: hubspot_query_limits
+title: HubSpot query limits
+order: 5
+items:
+  - query_crm_data groups by at most two dimensions and silently drops a third. Filter on one dimension instead.
+  - Check every result for a note saying rows or dimensions were dropped.
+  - Column order in the result can vary, so read the header.
+  - OR conditions work in WHERE, which allows a per-cycle date filter in one query.
+  - Group by high-cardinality text fields only within one market, or the query can fail.

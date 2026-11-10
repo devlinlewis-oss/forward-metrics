@@ -1,0 +1,9 @@
+name: channel_self_reported
+label: Self-reported channel
+status: agreed
+properties: [channel]
+rule: What the student told us. It follows hear_about_forward. It is not paid attribution.
+notes:
+  - Report channels on both self-report and first visit. They overlap; many friends and
+    family applicants first arrived on a paid search click.
+order: 3

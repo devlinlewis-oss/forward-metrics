@@ -1,0 +1,17 @@
+name: yield
+label: Yield
+status: agreed
+type: ratio
+description: Share of admitted students who enrolled.
+numerator: {stage: enrolled}
+denominator: {stage: admitted}
+formula: enrolled ÷ admitted
+time_anchor: Stage entry dates, within the cycle
+unit: percent
+period_rule: Only quote it for complete cycles.
+slice_by: [market, cycle, programme_group, enrolled_degree]
+benchmark: all_countries
+owner:
+  definition: unassigned
+  calculation: Devlin
+order: 2

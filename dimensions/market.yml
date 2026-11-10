@@ -1,0 +1,6 @@
+name: market
+label: Market
+status: agreed
+properties: [highschool_diploma_country]
+rule: Always High School Country. Don't use nationality, residence or IP country.
+order: 1

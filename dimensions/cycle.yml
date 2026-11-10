@@ -1,0 +1,9 @@
+name: cycle
+label: Cycle
+status: agreed
+properties: [admissions_cycle_year]
+rule: >-
+  Values such as 24/25, 25/26, 26/27. Cycles run September to August. Always filter on
+  cycle when comparing cycles: a date filter alone also pulls in contacts from the current
+  cycle.
+order: 2

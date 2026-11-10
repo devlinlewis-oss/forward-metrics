@@ -1,0 +1,24 @@
+name: spend_per_enrolled
+label: Spend per enrolled
+status: agreed
+type: ratio
+description: Paid spend in a market divided by everyone enrolled from that market.
+numerator: {expression: "all paid spend in the market (Google + Meta + school visits)"}
+denominator: {stage: enrolled}
+formula: all paid spend in the market ÷ everyone enrolled from it, unless a channel is specified
+time_anchor: Spend by cycle; Enrolled entry date
+unit: eur_per_contact
+slice_by: [market, cycle]
+benchmark: spend_markets
+source: spend_sheet
+owner:
+  definition: unassigned
+  calculation: Devlin
+notes:
+  - Students are by High School Country and spend is by country targeted, so the two can
+    differ a little.
+  - >-
+    When a channel is specified, use that channel's spend only. Whether the denominator
+    then becomes that channel's enrolled students isn't defined yet, so say which you used
+    and flag it.
+order: 4

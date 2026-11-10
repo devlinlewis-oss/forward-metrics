@@ -1,0 +1,24 @@
+id: benchmarks
+title: Benchmarks
+order: 3
+benchmarks:
+  - id: all_countries
+    label: All countries
+    rule: >-
+      Rates such as yield, offers declined, aid share and programme mix compare with all
+      countries for the same cycles.
+  - id: spend_markets
+    label: Markets we spend in
+    rule: >-
+      Spend per enrolled compares with markets with at least €5k of spend across 24/25 and
+      25/26. Refresh the list when new cycle spend is added.
+    threshold_eur: 5000
+    cycles: [24/25, 25/26]
+    markets: [Germany, Italy, United Kingdom, Spain, United States, Canada, France, Norway,
+      Sweden, Brazil, Netherlands, Austria, United Arab Emirates, Portugal, Belgium,
+      Finland, Colombia, Denmark, Mexico, Switzerland, Poland, Israel, Turkey, Morocco]
+items:
+  - >-
+    All-country and spend-market benchmarks can tell different stories (Germany's yield is
+    near the all-country figure but below the spend-market figure), so be clear which one
+    is used.

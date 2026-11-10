@@ -1,0 +1,16 @@
+name: offers_declined_rate
+label: Offers declined
+status: agreed
+type: ratio
+description: Share of admitted students who declined their offer.
+numerator: {expression: "admitted contacts with offer_proposal = Offer Declined"}
+denominator: {stage: admitted}
+formula: offer_proposal = Offer Declined ÷ admitted
+time_anchor: Admitted entry date, within the cycle
+unit: percent
+slice_by: [market, cycle, programme_group, offer_degree]
+benchmark: all_countries
+owner:
+  definition: unassigned
+  calculation: Devlin
+order: 3

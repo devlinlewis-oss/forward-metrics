@@ -1,0 +1,26 @@
+name: fa_status_group
+label: Financial aid status group
+status: agreed
+properties: [financial_support_request_statut]
+rule: Measured among admits. Group the statuses as below.
+values:
+  - value: did_not_ask
+    label: Did not ask
+    definition: Unassigned
+  - value: offered
+    label: Offered aid by us
+    definition: >-
+      Financial Support Accepted (letter signed), FA Offer Sent, FA Final Letter Sent,
+      Denied by FC (labelled Denied by Applicant)
+  - value: refused
+    label: Refused aid by us
+    definition: Financial Support Refused
+  - value: not_completed
+    label: Aid request not completed
+    definition: >-
+      Everything else, including Financial Support Started (incomplete), Financial Support
+      Pending, and the old statuses for applicants who withdrew before an outcome or were
+      waiting on documents
+notes:
+  - "[confirm] The old \"[to delete]\" statuses are grouped by their notes. Check with Bruno."
+order: 10

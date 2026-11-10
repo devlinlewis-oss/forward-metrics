@@ -1,0 +1,19 @@
+name: format_choice_share
+label: Share of applicants choosing a format
+status: agreed
+type: ratio
+description: Share of applicants who chose a given programme format.
+numerator: {expression: "total applicants minus Unassigned in that format's selection field"}
+denominator: {expression: "total applicants"}
+formula: (total applicants − Unassigned in that field) ÷ total applicants
+unit: percent
+slice_by: [market, cycle]
+benchmark: all_countries
+owner:
+  definition: unassigned
+  calculation: Devlin
+notes:
+  - Fields are bachelors_selection, bachelors_plus_selection, double_bachelors_selection
+    and open_bachelors_selection.
+  - Shares across formats can sum to more than 100%, because applicants can choose several.
+order: 7

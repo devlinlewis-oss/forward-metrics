@@ -1,0 +1,6 @@
+name: enrolled_degree
+label: Degree enrolled on
+status: agreed
+properties: [degree_name]
+rule: The degree a student enrols on.
+order: 9
