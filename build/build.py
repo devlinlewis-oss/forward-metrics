@@ -2,8 +2,8 @@
 """Validate the forward-metrics definitions and generate the Claude skill + readable doc.
 
 Usage:
-    python build/build.py           validate, then write dist/
-    python build/build.py --check   validate only (exit code 1 on errors)
+    python3 build/build.py           validate, then write dist/
+    python3 build/build.py --check   validate only (exit code 1 on errors)
 """
 import shutil
 import sys

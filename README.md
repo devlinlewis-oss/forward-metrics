@@ -26,8 +26,8 @@ OPEN_QUESTIONS.md  Definitions not yet signed off, and known conflicts
 
 ```bash
 pip install pyyaml
-python build/build.py           # validate + generate dist/
-python build/build.py --check   # validate only (use before committing)
+python3 build/build.py           # validate + generate dist/
+python3 build/build.py --check   # validate only (use before committing)
 ```
 
 Each definition has a `status`:
@@ -38,7 +38,7 @@ Each definition has a `status`:
 ## Changing a definition
 
 1. Edit or add the YAML file (Claude Code can draft it).
-2. Run `python build/build.py --check`.
+2. Run `python3 build/build.py --check`.
 3. Commit with a message that says what changed and why. If someone else needs to agree
    (the metric's definition owner), open a pull request and have them approve it.
 4. Run the full build and upload `dist/forward-metric-definitions.zip` to Campus Claude.

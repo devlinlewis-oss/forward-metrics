@@ -13,7 +13,7 @@ how every metric is calculated. `dist/` is generated: never edit it by hand.
 - Never invent a HubSpot property name, lifecycle value or spend source. If unsure, look it
   up with the HubSpot tools or ask, and record what you checked in the file's `notes`.
 - Add anything unresolved to OPEN_QUESTIONS.md.
-- After any change, run `python build/build.py --check` and fix every error before
+- After any change, run `python3 build/build.py --check` and fix every error before
   finishing.
 
 ## When an analysis session finds a gap
