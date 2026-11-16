@@ -38,3 +38,12 @@ update the YAML, set `status: agreed`, and delete it from this list.
     eligible submitted. Pick a default for the glossary.
 11. **Invite rate.** Commonly asked for, not defined. Invited ÷ submitted, or invited ÷
     eligible submitted?
+
+## Deferrals (found in the weekly enrolment analysis, Nov 2026)
+
+12. **Identifying a deferral in HubSpot.** No property or stage is agreed. Candidates on
+    contacts: `readmission` (Re-admit Deferred Student), `adm_process_step_deferral_form`
+    and `adm_process__step_date__deferral_form` (Deferral form), `defer_start_year`. Which
+    one, if any, marks a deferral reliably? (`glossary.yml`, Deferred enrolled)
+13. **Backfilling Enrolling for 26/27.** Should the 26/27 Enrolling count be backfilled for
+    deferrals who paid before the Nov 2026 process fix and have no Enrolling date?

@@ -7,3 +7,17 @@ terms:
     definition: An admissions cycle, September to August, written like 25/26.
   - term: Market
     definition: A student's High School Country.
+  - term: Deferred enrolled
+    status: confirm
+    definition: >-
+      A student admitted in a previous cycle who deferred their start and pays to enrol in
+      the current cycle. They count as Enrolled in the current cycle like any other student
+      (the standard paid-segment date). They must also submit the current cycle's
+      enrolment form, so they pass through Enrolling first
+      (hs_v2_date_entered_735815160). A contact in the paid segment with no Enrolling date
+      is most likely a deferral who wasn't sent the enrolment form: flag these in reports
+      rather than counting them silently. Process rule agreed Nov 2026: admissions sends
+      deferred students the enrolment form link and they submit it. Before then admissions
+      didn't know this, so at least one 26/27 deferral is in the paid segment with no
+      Enrolling date (found in the week of 9-15 Nov 2026). There's no agreed way yet to
+      identify a deferral in HubSpot, so don't filter on one.

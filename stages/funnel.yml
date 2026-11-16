@@ -1,6 +1,7 @@
 rule: >-
   A contact reached a stage if its stage entry date is not null. Use the lifecycle date,
   not deal properties. In particular, Invited is defined by the lifecycle stage date.
+  The exception is Enrolled, which uses the date added to the cycle's paid segment.
 object: contacts
 stages:
   - id: started_application
@@ -40,13 +41,32 @@ stages:
     status: agreed
 
   - id: enrolling
-    label: Enrolling (accepted the offer)
+    label: Enrolling (submitted the enrolment form)
     lifecycle_value: "735815160"
     entry_date_property: hs_v2_date_entered_735815160
     status: agreed
+    notes:
+      - Deferred students from a previous cycle must also submit the enrolment form and
+        enter Enrolling. A paid student with no Enrolling date is a data-quality flag. See
+        Deferred enrolled.
 
   - id: enrolled
-    label: Enrolled
-    lifecycle_value: "735815354"
-    entry_date_property: hs_v2_date_entered_735815354
+    label: Enrolled (paid)
+    lifecycle_value: null          # not a lifecycle stage; see notes
+    entry_date_property: date_added_to_2627_enrolled_students_paid_segment
+    entry_date_property_by_cycle:
+      "26/27": date_added_to_2627_enrolled_students_paid_segment
+      "25/26": date_added_to_2526_enrolled_students_paid_segment
+      "24/25": date_added_to_2425_enrolled_students_paid_segment
     status: agreed
+    notes:
+      - Students who have paid, counted on the date they were added to that cycle's paid
+        segment. Same definition as the campaign tracker. Use the property for the cycle
+        reported and also filter on cycle.
+      - Don't use the lifecycle Enrolled date (hs_v2_date_entered_735815354, lifecycle
+        value 735815354). It's the date admissions processes and confirms an enrolment, an
+        internal admin step, and isn't used in reporting. Using it gave 4 enrolled in the
+        week of 9-15 Nov 2026 instead of 2.
+      - 'Checked in HubSpot (16 Nov 2026): all three paid-segment properties exist on
+        contacts. The 24/25 one was created by Devlin on 16 Nov 2026. The 25/26
+        paid-segment total is 164.'

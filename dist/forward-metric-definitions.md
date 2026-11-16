@@ -80,7 +80,7 @@ yet. State them when you use them.
 
 ## Funnel stages
 
-A contact reached a stage if its stage entry date is not null. Use the lifecycle date, not deal properties. In particular, Invited is defined by the lifecycle stage date.
+A contact reached a stage if its stage entry date is not null. Use the lifecycle date, not deal properties. In particular, Invited is defined by the lifecycle stage date. The exception is Enrolled, which uses the date added to the cycle's paid segment.
 
 | Stage | Lifecycle value | Entry date property |
 |---|---|---|
@@ -90,8 +90,18 @@ A contact reached a stage if its stage entry date is not null. Use the lifecycle
 | Eligible Submitted Application [confirm] | 845219062 | hs_v2_date_entered_845219062 |
 | Invited to Interview | opportunity | hs_v2_date_entered_opportunity |
 | Admitted | 845292228 | hs_v2_date_entered_845292228 |
-| Enrolling (accepted the offer) | 735815160 | hs_v2_date_entered_735815160 |
-| Enrolled | 735815354 | hs_v2_date_entered_735815354 |
+| Enrolling (submitted the enrolment form) | 735815160 | hs_v2_date_entered_735815160 |
+| Enrolled (paid) | - | 26/27: date_added_to_2627_enrolled_students_paid_segment; 25/26: date_added_to_2526_enrolled_students_paid_segment; 24/25: date_added_to_2425_enrolled_students_paid_segment |
+
+### Enrolling (submitted the enrolment form)
+
+- Deferred students from a previous cycle must also submit the enrolment form and enter Enrolling. A paid student with no Enrolling date is a data-quality flag. See Deferred enrolled.
+
+### Enrolled (paid)
+
+- Students who have paid, counted on the date they were added to that cycle's paid segment. Same definition as the campaign tracker. Use the property for the cycle reported and also filter on cycle.
+- Don't use the lifecycle Enrolled date (hs_v2_date_entered_735815354, lifecycle value 735815354). It's the date admissions processes and confirms an enrolment, an internal admin step, and isn't used in reporting. Using it gave 4 enrolled in the week of 9-15 Nov 2026 instead of 2.
+- Checked in HubSpot (16 Nov 2026): all three paid-segment properties exist on contacts. The 24/25 one was created by Devlin on 16 Nov 2026. The 25/26 paid-segment total is 164.
 
 ## Terms
 
@@ -99,6 +109,7 @@ A contact reached a stage if its stage entry date is not null. Use the lifecycle
 - **Offer accepted vs enrolled:** Offer accepted (Enrolling) is not enrolled. Use the Enrolled date for enrolment.
 - **Cycle:** An admissions cycle, September to August, written like 25/26.
 - **Market:** A student's High School Country.
+- **Deferred enrolled [confirm]:** A student admitted in a previous cycle who deferred their start and pays to enrol in the current cycle. They count as Enrolled in the current cycle like any other student (the standard paid-segment date). They must also submit the current cycle's enrolment form, so they pass through Enrolling first (hs_v2_date_entered_735815160). A contact in the paid segment with no Enrolling date is most likely a deferral who wasn't sent the enrolment form: flag these in reports rather than counting them silently. Process rule agreed Nov 2026: admissions sends deferred students the enrolment form link and they submit it. Before then admissions didn't know this, so at least one 26/27 deferral is in the paid segment with no Enrolling date (found in the week of 9-15 Nov 2026). There's no agreed way yet to identify a deferral in HubSpot, so don't filter on one.
 
 ## Metrics
 

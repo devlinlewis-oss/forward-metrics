@@ -65,6 +65,10 @@ def validate(d):
         if s.get("status") not in STATUSES:
             err(f"stages/funnel.yml: stage {s.get('id')} has invalid status {s.get('status')!r}")
 
+    for t in d["glossary"]:
+        if "status" in t and t["status"] not in STATUSES:
+            err(f"glossary.yml: term {t.get('term')!r} has invalid status {t['status']!r}")
+
     for stem, dim in d["dimensions"].items():
         where = f"dimensions/{stem}.yml"
         for k in DIMENSION_REQUIRED:
@@ -190,15 +194,26 @@ def render(d):
 
     f = d["funnel"]
     out += ["## Funnel stages", "", cell(f["rule"]), ""]
+    def entry_date(st):
+        by_cycle = st.get("entry_date_property_by_cycle")
+        if by_cycle:
+            return "; ".join(f"{c}: {p}" for c, p in by_cycle.items())
+        return st["entry_date_property"]
+
     out.append(table(
         ["Stage", "Lifecycle value", "Entry date property"],
-        [[st["label"] + tag(st), st["lifecycle_value"], st["entry_date_property"]] for st in f["stages"]],
+        [[st["label"] + tag(st), st["lifecycle_value"] or "-", entry_date(st)] for st in f["stages"]],
     ))
     out.append("")
+    for st in f["stages"]:
+        if st.get("notes"):
+            out += [f"### {st['label']}{tag(st)}", ""]
+            out += [f"- {cell(n)}" for n in st["notes"]]
+            out.append("")
 
     out += ["## Terms", ""]
     for t in d["glossary"]:
-        out.append(f"- **{t['term']}:** {cell(t['definition'])}")
+        out.append(f"- **{t['term']}{tag(t)}:** {cell(t['definition'])}")
     out.append("")
 
     out += ["## Metrics", ""]
