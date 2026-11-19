@@ -1,0 +1,25 @@
+name: event_category
+label: Event category
+status: agreed
+source: hubspot_appointments
+properties: [event_category]
+rule: >-
+  Appointment property event_category. Recruitment event metrics only count the three
+  in-person categories below. Match the values exactly.
+values:
+  - value: Individual School Visit
+    definition: In scope
+  - value: External Fair
+    definition: In scope
+  - value: Organised School Tour
+    definition: In scope
+notes:
+  - >-
+    Out of scope (other values that exist on the property): Virtual Event, Counsellor and
+    Agent Engagement, Pay It Forward, Campus visit, Parents/prospectives meeting. Devlin
+    confirmed (19 Nov 2026) that none of these are in scope for now.
+  - >-
+    Source: recruitment events dashboard (build_recruitment_dashboard.js, EVENT_CATEGORIES
+    env var). Checked in HubSpot (19 Nov 2026): event_category is an enumeration on
+    appointments and all three in-scope values exist exactly as written.
+order: 20

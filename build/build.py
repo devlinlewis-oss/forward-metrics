@@ -17,7 +17,7 @@ DIST = ROOT / "dist"
 
 STATUSES = {"agreed", "confirm"}
 METRIC_TYPES = {"count", "ratio", "unavailable"}
-UNITS = {"contacts", "percent", "eur", "eur_per_contact"}
+UNITS = {"contacts", "percent", "eur", "eur_per_contact", "events", "contacts_per_event"}
 METRIC_REQUIRED = ["name", "label", "status", "type", "description", "formula", "unit", "owner"]
 DIMENSION_REQUIRED = ["name", "label", "status", "properties", "rule"]
 STAGE_REQUIRED = ["id", "label", "lifecycle_value", "entry_date_property", "status"]

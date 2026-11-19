@@ -1,0 +1,19 @@
+name: event_team_member
+label: Event team member
+status: agreed
+source: hubspot_appointments
+properties: [primary_attendee]
+rule: >-
+  Each event is credited to exactly one team member, its Primary Attendee
+  (primary_attendee). Other attendees on the event get no credit. Events with a blank
+  Primary Attendee, or one who isn't on the current recruitment team, are excluded.
+notes:
+  - >-
+    Who counts as the recruitment team changes from year to year, so it isn't listed here.
+    The recruitment events dashboard sets it in the ATTENDEES env var. Match values
+    exactly as stored in HubSpot, accents included.
+  - >-
+    Checked in HubSpot (19 Nov 2026): primary_attendee is a dropdown on appointments. As
+    well as team members' first names, it has non-recruiter values (Forward Staff, Student
+    Ambassador, TBC), which are always excluded.
+order: 21

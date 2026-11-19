@@ -1,0 +1,58 @@
+name: recruitment_events
+label: Recruitment events
+status: agreed
+type: count
+description: >-
+  In-person recruitment events run by a team member, counted once per HubSpot appointment
+  record.
+formula: >-
+  Count of appointment records (object 0-421) that pass every filter below. Events with
+  the same name are not merged.
+filters:
+  - event_category is Individual School Visit, External Fair or Organised School Tour (see Event category)
+  - primary_attendee is a member of the current recruitment team (see Event team member)
+  - >-
+    Not cancelled. Exclude the event if hs_pipeline_stage is
+    6d14a4e1-f118-41a6-86d4-9aefabe6e789 (Appointment Pipeline, Canceled), or if "cancel"
+    or "annul" (case-insensitive) appears in hs_appointment_name, status or bookedstatus.
+time_anchor: appointment_start_recruitment (the event date), in Europe/Lisbon time
+period_rule: >-
+  Default window is the current academic year to date: from the most recent 1 September
+  on or before today, up to and including today. The event's cycle is the academic year
+  (September to August) its date falls in, written like 26/27.
+unit: events
+slice_by: [event_category, event_team_member]
+source: hubspot_appointments
+owner:
+  definition: unassigned
+  calculation: Devlin
+notes:
+  - >-
+    Source: recruitment events dashboard (build_recruitment_dashboard.js, SETUP.md). The
+    dashboard's "Events" tile is this count after the dashboard filters.
+  - >-
+    Check recorded in SETUP.md (19 Nov 2026): the category and attendee filters matched 209
+    appointments; 1 was excluded as cancelled by name ("Yago School Sevilla - cancelled"),
+    leaving 208. Devlin confirmed (19 Nov 2026) that 208 matches what the team expects.
+    No in-scope event was in the Canceled stage, so the stage rule hasn't been
+    tested on live data.
+  - >-
+    Both cancellation rules stay (Devlin, 19 Nov 2026). The text rule can drop a real
+    event that has "cancel" or "annul" in its name for another reason. The dashboard logs
+    each exclusion, so check the log.
+  - >-
+    The dashboard sends the window dates as midnight-UTC values (HubSpot date properties
+    are stored that way), rolls over automatically each September, and can be overridden
+    with REPORT_START / REPORT_END. Its page heading "Recruitment events 26/27" is
+    hard-coded and won't change with the window.
+  - >-
+    Checked in HubSpot (19 Nov 2026): appointment_start_recruitment is a date property
+    labelled "Date" on appointments. It's separate from hs_appointment_start (Appointment
+    Start, datetime). Devlin confirmed (19 Nov 2026) that it holds the event date, not the
+    booking date.
+  - >-
+    Checked in HubSpot (19 Nov 2026): all six properties exist on appointments, and the
+    Canceled stage ID is correct. status is a dropdown (Planning, Confirmed, Confirmed not
+    paid, Confirmed and paid, Completed), so the text rule can never match on it; only
+    hs_appointment_name and bookedstatus (free text) can match.
+order: 20

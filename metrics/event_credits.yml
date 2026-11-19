@@ -1,0 +1,59 @@
+name: event_credits
+label: Event credits
+status: agreed
+type: count
+description: >-
+  Contacts linked to recruitment events, counted once per event they're linked to. These
+  are event credits, not unique people.
+formula: >-
+  For each included event (see Recruitment events), take the distinct contacts associated
+  with the appointment through association type 71 (label "Lead"). That count is the
+  event's leads; for a funnel stage, count the leads whose admissions_cycle_year is the
+  event's cycle and who reached that stage (its entry date property for that cycle has
+  any value). Sum across events. No de-duplication across events.
+filters:
+  - >-
+    Funnel stages only: the lead's admissions_cycle_year equals the event's cycle (see
+    Recruitment events). Leads themselves aren't filtered by cycle.
+unit: contacts
+slice_by: [event_category, event_team_member]
+source: hubspot_appointments
+owner:
+  definition: unassigned
+  calculation: Devlin
+notes:
+  - >-
+    A student linked to three events counts at all three. Within one event, duplicate
+    contacts are counted once. Don't call this a number of students.
+  - >-
+    Matches the original HubSpot report, and no unique-people figure is needed (Devlin,
+    19 Nov 2026).
+  - >-
+    A lead is a prospective student met at the event: a contact with the "Lead"
+    association label (type 71, Recruitment event ↔ Lead). Contacts with other labels are
+    ignored, for example attending counsellors (type 77). This is not HubSpot's Lead
+    object or the lifecycle stage "lead".
+  - >-
+    Checked in HubSpot (19 Nov 2026): Appointment → Contact association labels are Lead
+    (71), Attending counsellor (77), Registered Participant (81) and Student Associated
+    (59). Only 71 counts.
+  - >-
+    Stages used by the recruitment events dashboard: Started apps = started_application
+    (hs_v2_date_entered_735800774); Invited = invited_to_interview
+    (hs_v2_date_entered_opportunity); Enrolled = enrolled, the agreed paid-segment date for
+    the event's cycle (for example date_added_to_2627_enrolled_students_paid_segment for
+    26/27), not the lifecycle Enrolled date. Checked in HubSpot
+    (19 Nov 2026): lifecycle values 735800774 (Started Application), opportunity (Invited
+    to Interview) and 735815354 (Enrolled) are as labelled.
+  - >-
+    Decided by Devlin (19 Nov 2026): Enrolled uses the paid-segment date, and funnel
+    stages are filtered to the event's cycle. The recruitment events dashboard still
+    counts any lead who ever reached the stage, with no cycle filter, and uses the
+    lifecycle Enrolled date (hs_v2_date_entered_735815354). Until the dashboard code is
+    changed, its Started apps, Invited and Enrolled figures can be higher than this
+    definition.
+  - >-
+    The event's cycle applies to every category, school visits included (Devlin, 19 Nov
+    2026). A lead who applies in a later cycle doesn't count, and there's no separate
+    later-cycle metric.
+order: 21

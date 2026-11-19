@@ -33,6 +33,8 @@ yet. State them when you use them.
 | Degree enrolled on | degree_name | The degree a student enrols on. |
 | Financial aid status group | financial_support_request_statut | Measured among admits. Group the statuses as below. |
 | Country targeted (spend) | - | Spend is recorded by country targeted. Students are by High School Country, so the two can differ a little. |
+| Event category | event_category | Appointment property event_category. Recruitment event metrics only count the three in-person categories below. Match the values exactly. |
+| Event team member | primary_attendee | Each event is credited to exactly one team member, its Primary Attendee (primary_attendee). Other attendees on the event get no credit. Events with a blank Primary Attendee, or one who isn't on the current recruitment team, are excluded. |
 
 ### Self-reported channel
 
@@ -77,6 +79,22 @@ yet. State them when you use them.
 ### Country targeted (spend)
 
 - HubSpot says Turkey, while the spend sheet uses both Turkey and Turkiye.
+
+### Event category
+
+| Group | Definition |
+|---|---|
+| Individual School Visit | In scope |
+| External Fair | In scope |
+| Organised School Tour | In scope |
+
+- Out of scope (other values that exist on the property): Virtual Event, Counsellor and Agent Engagement, Pay It Forward, Campus visit, Parents/prospectives meeting. Devlin confirmed (19 Nov 2026) that none of these are in scope for now.
+- Source: recruitment events dashboard (build_recruitment_dashboard.js, EVENT_CATEGORIES env var). Checked in HubSpot (19 Nov 2026): event_category is an enumeration on appointments and all three in-scope values exist exactly as written.
+
+### Event team member
+
+- Who counts as the recruitment team changes from year to year, so it isn't listed here. The recruitment events dashboard sets it in the ATTENDEES env var. Match values exactly as stored in HubSpot, accents included.
+- Checked in HubSpot (19 Nov 2026): primary_attendee is a dropdown on appointments. As well as team members' first names, it has non-recruiter values (Forward Staff, Student Ambassador, TBC), which are always excluded.
 
 ## Funnel stages
 
@@ -190,6 +208,51 @@ Share of applicants who chose a given programme format.
 - Fields are bachelors_selection, bachelors_plus_selection, double_bachelors_selection and open_bachelors_selection.
 - Shares across formats can sum to more than 100%, because applicants can choose several.
 
+### Recruitment events (`recruitment_events`)
+
+In-person recruitment events run by a team member, counted once per HubSpot appointment record.
+
+- **Formula:** Count of appointment records (object 0-421) that pass every filter below. Events with the same name are not merged.
+- **Time anchor:** appointment_start_recruitment (the event date), in Europe/Lisbon time
+- **Period:** Default window is the current academic year to date: from the most recent 1 September on or before today, up to and including today. The event's cycle is the academic year (September to August) its date falls in, written like 26/27.
+- **Filter:** event_category is Individual School Visit, External Fair or Organised School Tour (see Event category)
+- **Filter:** primary_attendee is a member of the current recruitment team (see Event team member)
+- **Filter:** Not cancelled. Exclude the event if hs_pipeline_stage is 6d14a4e1-f118-41a6-86d4-9aefabe6e789 (Appointment Pipeline, Canceled), or if "cancel" or "annul" (case-insensitive) appears in hs_appointment_name, status or bookedstatus.
+- **Unit:** events
+- **Slice by:** event_category, event_team_member
+- Source: recruitment events dashboard (build_recruitment_dashboard.js, SETUP.md). The dashboard's "Events" tile is this count after the dashboard filters.
+- Check recorded in SETUP.md (19 Nov 2026): the category and attendee filters matched 209 appointments; 1 was excluded as cancelled by name ("Yago School Sevilla - cancelled"), leaving 208. Devlin confirmed (19 Nov 2026) that 208 matches what the team expects. No in-scope event was in the Canceled stage, so the stage rule hasn't been tested on live data.
+- Both cancellation rules stay (Devlin, 19 Nov 2026). The text rule can drop a real event that has "cancel" or "annul" in its name for another reason. The dashboard logs each exclusion, so check the log.
+- The dashboard sends the window dates as midnight-UTC values (HubSpot date properties are stored that way), rolls over automatically each September, and can be overridden with REPORT_START / REPORT_END. Its page heading "Recruitment events 26/27" is hard-coded and won't change with the window.
+- Checked in HubSpot (19 Nov 2026): appointment_start_recruitment is a date property labelled "Date" on appointments. It's separate from hs_appointment_start (Appointment Start, datetime). Devlin confirmed (19 Nov 2026) that it holds the event date, not the booking date.
+- Checked in HubSpot (19 Nov 2026): all six properties exist on appointments, and the Canceled stage ID is correct. status is a dropdown (Planning, Confirmed, Confirmed not paid, Confirmed and paid, Completed), so the text rule can never match on it; only hs_appointment_name and bookedstatus (free text) can match.
+
+### Event credits (`event_credits`)
+
+Contacts linked to recruitment events, counted once per event they're linked to. These are event credits, not unique people.
+
+- **Formula:** For each included event (see Recruitment events), take the distinct contacts associated with the appointment through association type 71 (label "Lead"). That count is the event's leads; for a funnel stage, count the leads whose admissions_cycle_year is the event's cycle and who reached that stage (its entry date property for that cycle has any value). Sum across events. No de-duplication across events.
+- **Filter:** Funnel stages only: the lead's admissions_cycle_year equals the event's cycle (see Recruitment events). Leads themselves aren't filtered by cycle.
+- **Unit:** contacts
+- **Slice by:** event_category, event_team_member
+- A student linked to three events counts at all three. Within one event, duplicate contacts are counted once. Don't call this a number of students.
+- Matches the original HubSpot report, and no unique-people figure is needed (Devlin, 19 Nov 2026).
+- A lead is a prospective student met at the event: a contact with the "Lead" association label (type 71, Recruitment event ↔ Lead). Contacts with other labels are ignored, for example attending counsellors (type 77). This is not HubSpot's Lead object or the lifecycle stage "lead".
+- Checked in HubSpot (19 Nov 2026): Appointment → Contact association labels are Lead (71), Attending counsellor (77), Registered Participant (81) and Student Associated (59). Only 71 counts.
+- Stages used by the recruitment events dashboard: Started apps = started_application (hs_v2_date_entered_735800774); Invited = invited_to_interview (hs_v2_date_entered_opportunity); Enrolled = enrolled, the agreed paid-segment date for the event's cycle (for example date_added_to_2627_enrolled_students_paid_segment for 26/27), not the lifecycle Enrolled date. Checked in HubSpot (19 Nov 2026): lifecycle values 735800774 (Started Application), opportunity (Invited to Interview) and 735815354 (Enrolled) are as labelled.
+- Decided by Devlin (19 Nov 2026): Enrolled uses the paid-segment date, and funnel stages are filtered to the event's cycle. The recruitment events dashboard still counts any lead who ever reached the stage, with no cycle filter, and uses the lifecycle Enrolled date (hs_v2_date_entered_735815354). Until the dashboard code is changed, its Started apps, Invited and Enrolled figures can be higher than this definition.
+- The event's cycle applies to every category, school visits included (Devlin, 19 Nov 2026). A lead who applies in a later cycle doesn't count, and there's no separate later-cycle metric.
+
+### Event credits per event (`event_credits_per_event`)
+
+Average event credits (leads, or a funnel stage) per included event.
+
+- **Formula:** event credits ÷ included events in the current filter, counting events with zero leads in the denominator
+- **Unit:** contacts_per_event
+- **Slice by:** event_category, event_team_member
+- Shown as "per event" or "/ev" on the recruitment events dashboard.
+- Display: "0" for zero, "<0.01" for very small values, 2 decimals below 1, otherwise 1 decimal.
+
 ## Not available yet
 
 Don't estimate these. Say they can't be calculated and why.
@@ -199,6 +262,7 @@ Don't estimate these. Say they can't be calculated and why.
 ## Sources
 
 - **HubSpot CRM (contacts):** Funnel stages and dates, market, cycle, channel, first visit, programmes, offers, financial aid status.
+- **HubSpot CRM (Appointments object, 0-421):** Recruitment events, event category, primary attendee, event cancellation. In-person recruitment events are logged as appointments in the Appointment Pipeline.
 - **Paid media and school visits spend sheet:** Paid spend by Google, Meta and school visits, by country targeted. Meta figures come from Meta Ads Manager, not the old sheet's numbers.
 - **Finance:** Tuition and aid amounts, net revenue.
 

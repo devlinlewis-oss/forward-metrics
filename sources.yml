@@ -2,6 +2,11 @@ sources:
   - id: hubspot
     label: HubSpot CRM (contacts)
     owns: [Funnel stages and dates, market, cycle, channel, first visit, programmes, offers, financial aid status]
+  - id: hubspot_appointments
+    label: HubSpot CRM (Appointments object, 0-421)
+    owns: [Recruitment events, event category, primary attendee, event cancellation]
+    notes:
+      - In-person recruitment events are logged as appointments in the Appointment Pipeline.
   - id: spend_sheet
     label: Paid media and school visits spend sheet
     owns: [Paid spend by Google, Meta and school visits, by country targeted]
